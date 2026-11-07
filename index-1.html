@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FEED AMOICHI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(140deg,#173b2b,#101c18);font-family:system-ui;color:#fff4d7}.game{width:min(100%,430px);padding:22px;border:2px solid #8eb85b;border-radius:26px;background:#23432e;text-align:center;box-shadow:0 18px 50px #0008}h1{margin:0;color:#c6ff75;font-size:38px}.sub{margin:4px 0 16px;color:#d7e9c8}.stats{display:flex;justify-content:space-around;gap:8px}.stat{background:#14291d;padding:10px;border-radius:12px;flex:1}.stat b{display:block;font-size:25px;color:#c6ff75}.scene{height:210px;margin:15px 0;background:linear-gradient(#91d9c4 0 60%,#69a84d 60%);border-radius:18px;position:relative;overflow:hidden;display:grid;place-items:center}.monkey{font-size:105px;filter:drop-shadow(0 5px 2px #345)}.tree{position:absolute;right:10px;bottom:8px;font-size:58px}.sun{position:absolute;right:25px;top:18px;font-size:36px}.msg{min-height:25px;color:#d9f2b7;font-weight:700}button{border:0;border-radius:14px;padding:14px 20px;font-size:18px;font-weight:800;cursor:pointer;background:#c6ff75;color:#17321f;box-shadow:0 4px 0 #789e43}button:active{transform:translateY(3px);box-shadow:0 1px 0 #789e43}.secondary{margin-top:12px;background:#ffe6a0}.note{font-size:12px;color:#c7d8c0;margin-top:14px}
+</style>
+</head>
+<body>
+<main class="game">
+<h1>FEED AMOICHI 🥥</h1><p class="sub">The monkey is hungry. Feed him!</p>
+<div class="stats"><div class="stat"><b id="score">0</b><span>COCONUTS FED</span></div><div class="stat"><b id="level">1</b><span>LEVEL</span></div><div class="stat"><b id="best">0</b><span>BEST</span></div></div>
+<div class="scene"><span class="sun">☀️</span><span class="tree">🌴</span><div class="monkey" id="monkey">🐵</div></div>
+<div class="msg" id="message">Give Amoichi a coconut!</div>
+<button id="feed">🥥 FEED AMOICHI</button><br>
+<button class="secondary" id="surprise">🎁 SURPRISE</button>
+<p class="note">A silly mini-game. No virus, no scanning, just monkey business.</p>
+</main>
+<script>
+let score=0,best=Number(localStorage.getItem('amoichiBest')||0);
+const $=id=>document.getElementById(id);
+$('best').textContent=best;
+$('feed').addEventListener('click',()=>{
+ score++; $('score').textContent=score; $('level').textContent=1+Math.floor(score/10);
+ $('message').textContent=score%10===0?'AMOICHI LEVEL UP! 🎉':'YUM! Amoichi loves coconuts!';
+ $('monkey').textContent=score%5===0?'🙉':'🐵';
+ $('monkey').animate([{transform:'translateY(0) scale(1)'},{transform:'translateY(-18px) scale(1.12)'},{transform:'translateY(0) scale(1)'}],{duration:300});
+ if(score>best){best=score;localStorage.setItem('amoichiBest',best);$('best').textContent=best;}
+});
+$('surprise').addEventListener('click',()=>{
+ $('message').textContent='🚨 NO VIRUS IN HERE! Just a pretend joke. 😂';
+ alert('NO VIRUS IN HERE!\n\nThis is only a silly pretend popup. Nothing is being scanned.');
+});
+</script>
+</body>
+</html>
